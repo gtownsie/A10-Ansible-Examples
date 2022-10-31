@@ -1,0 +1,23 @@
+---
+- name: Set DNS servers 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Set Primary DNS Server 
+    a10.acos_axapi.a10_ip_dns_primary:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ip_v4_addr: "{{a10_dns_pri}}"
+  - name: Set secondary DNS Server 
+    a10.acos_axapi.a10_ip_dns_secondary:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ip_v4_addr: "{{a10_dns_sec}}"
+
+

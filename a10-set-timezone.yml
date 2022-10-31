@@ -1,0 +1,15 @@
+---
+- name: Create SLB server 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: a10.acos_axapi.a10_timezone settings 
+    a10.acos_axapi.a10_timezone:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      timezone_index_cfg: 
+        timezone-index : "{{ a10_timezone }}"
+        nodst : true

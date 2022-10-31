@@ -1,0 +1,16 @@
+---
+- name: Set Default Gateway 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Set DFG
+    a10.acos_axapi.a10_ip_route_rib:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ip_dest_addr: "0.0.0.0"
+      ip_mask: "/0"
+      ip_nexthop_ipv4:
+        - ip_next_hop: "{{a10_gateway}}"

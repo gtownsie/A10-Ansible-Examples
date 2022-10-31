@@ -1,0 +1,26 @@
+---
+- name: Create SLB server 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Assign interface IP address
+    a10.acos_axapi.a10_interface_ve:
+      state: "present"
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ip:
+        address_list:
+        -  ipv4-address: "{{a10_outside_ip}}"
+           ipv4-netmask: "{{a10_outside_mask}}"
+      ifnum: "{{a10_outside_vlan}}"
+  - name: enable interface 1 
+    a10.acos_axapi.a10_interface_ethernet:
+      state: "present"
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ifnum: "{{a10_outside_interface}}" 
+      action: "enable"

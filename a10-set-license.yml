@@ -1,0 +1,25 @@
+---
+- name: Sendlicense key to vThunder
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Send License Key to vThunder
+    a10.acos_axapi.a10_glm:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      token: "{{ a10_license }}"
+      use_mgmt_port: "{{ a10_use_mgmt_port}}"
+      interval: "{{ a10_glm_interval }}"
+      enable_requests: "1"
+      allocate_bandwidth: "{{ a10_bandwidth }}"
+  - name: Request license
+    a10.acos_axapi.a10_glm_send:
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      state: present
+      license_request: 1

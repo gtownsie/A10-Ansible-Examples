@@ -1,0 +1,15 @@
+---
+- name:  Set NTP server 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: NTP Server 
+    a10.acos_axapi.a10_ntp_server_hostname:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      host_servername: "{{a10_ntp}}"
+      action: "enable"
+       

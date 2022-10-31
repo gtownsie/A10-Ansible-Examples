@@ -1,0 +1,14 @@
+---
+- name: Write Mem 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: a10.acos_axapi.a10_write_memory instance
+    a10.acos_axapi.a10_write_memory:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      partition: "all"
+      destination: "primary"

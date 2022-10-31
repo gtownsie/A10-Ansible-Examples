@@ -1,0 +1,14 @@
+---
+- name: Set hostname on vThunder  
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Set Hostname
+    a10.acos_axapi.a10_hostname:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      value: "{{ a10_hostname }}"
+

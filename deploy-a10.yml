@@ -1,0 +1,122 @@
+---
+- name: Deploy new a10 vThunder  
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Set Hostname
+    a10.acos_axapi.a10_hostname:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      value: "{{ a10_hostname }}"
+  - name: Set Primary DNS Server 
+    a10.acos_axapi.a10_ip_dns_primary:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ip_v4_addr: "{{a10_dns_pri}}"
+  - name: Set secondary DNS Server 
+    a10.acos_axapi.a10_ip_dns_secondary:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ip_v4_addr: "{{a10_dns_sec}}"
+  - name: a10.acos_axapi.a10_timezone settings 
+    a10.acos_axapi.a10_timezone:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      timezone_index_cfg: 
+        timezone-index : "{{ a10_timezone }}"
+        nodst : true
+  - name: NTP Server 
+    a10.acos_axapi.a10_ntp_server_hostname:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      host_servername: "{{a10_ntp}}"
+      action: "enable"
+  - name: Set Vlan 
+    a10.acos_axapi.a10_network_vlan:
+      state: present
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      vlan_num: "{{ a10_outside_vlan }}"
+      name: "{{ a10_outside_name }}"
+      untagged_eth_list:
+        - untagged_ethernet_start: "{{ a10_outside_interface }}"
+          untagged_ethernet_end: "{{ a10_outside_interface }}"
+      ve: "{{ a10_outside_vlan }}"
+  - name: Assign interface IP address
+    a10.acos_axapi.a10_interface_ve:
+      state: "present"
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ip:
+        address_list:
+        -  ipv4-address: "{{a10_outside_ip}}"
+           ipv4-netmask: "{{a10_outside_mask}}"
+      ifnum: "{{a10_outside_vlan}}"
+  - name: enable interface 1 
+    a10.acos_axapi.a10_interface_ethernet:
+      state: "present"
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ifnum: "{{a10_outside_interface}}" 
+      action: "enable"
+  - name: Set DFG
+    a10.acos_axapi.a10_ip_route_rib:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      ip_dest_addr: "0.0.0.0"
+      ip_mask: "/0"
+      ip_nexthop_ipv4:
+        - ip_next_hop: "{{a10_gateway}}"
+  - name: Send License Key to vThunder
+    a10.acos_axapi.a10_glm:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      token: "{{ a10_license }}"
+      use_mgmt_port: "{{ a10_use_mgmt_port}}"
+      interval: "{{ a10_glm_interval }}"
+      enable_requests: "1"
+      allocate_bandwidth: "{{ a10_bandwidth }}"
+  - name: Request license
+    a10.acos_axapi.a10_glm_send:
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      state: present
+      license_request: 1
+  - name: a10.acos_axapi.a10_write_memory instance
+    a10.acos_axapi.a10_write_memory:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      partition: "all"
+      destination: "primary"
