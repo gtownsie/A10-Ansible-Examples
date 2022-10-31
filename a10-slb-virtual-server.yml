@@ -1,0 +1,21 @@
+---
+- name: Create SLB virtual server 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Create SLB virtual server
+    a10.acos_axapi.a10_slb_virtual_server:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ ansible_username }}"
+      ansible_password: "{{ ansible_password }}"
+      ansible_port: "{{ ansible_port }}"
+      name: ansible_VS
+      ip_address:  1.2.3.4
+      netmask: 255.255.255.0
+       
+      port_list:
+        - port_number: 80
+          protocol: tcp
+          service_group: ansible_SG
+

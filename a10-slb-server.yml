@@ -1,0 +1,36 @@
+---
+- name: Create SLB server 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Create SLB Server 1
+    a10.acos_axapi.a10_slb_server:
+      state: absent 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      name: "{{ a10_server1_name }}"
+      host: "{{ a10_server1_host }}"
+      action: "enable"
+
+  - name: Create SLB Server 2
+    a10.acos_axapi.a10_slb_server:
+      state: present
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      name: "{{ a10_server2_name }}"
+      host: "{{ a10_server2_host }}"
+      action: "disable"
+
+  - name: Create SLB Server 3
+    a10.acos_axapi.a10_slb_server:
+      state: present
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ a10_username }}"
+      ansible_password: "{{ a10_password }}"
+      ansible_port: "{{ a10_port }}"
+      name: "{{ a10_server3_name }}"
+      host: "{{ a10_server3_host }}"

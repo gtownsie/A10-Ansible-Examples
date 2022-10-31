@@ -1,0 +1,13 @@
+---
+- name: Get A10 Interface brief
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: a10.acos_interface_brief instance
+    a10.acos_axapi.a10_interface_brief:
+      state: noop 
+      a10_host: "{{ a10_host }}"
+      a10_username: "{{ a10_username }}"
+      a10_password: "{{ a10_password }}"
+      a10_port: "{{ a10_port }}"
+      get_type: oper 

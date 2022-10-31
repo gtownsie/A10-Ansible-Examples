@@ -1,0 +1,22 @@
+---
+- name: Create SLB service group 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Create SLB service group
+    a10.acos_axapi.a10_slb_service_group:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ ansible_username }}"
+      ansible_password: "{{ ansible_password }}"
+      ansible_port: "{{ ansible_port }}"
+      name: ansible_sG 
+      protocol: tcp
+      health_check: HTTP_GET
+      member_list:
+              - name: SERVER1
+                port: 80
+              - name: SERVER2
+                port: 80
+              - name: SERVER3
+                port: 80

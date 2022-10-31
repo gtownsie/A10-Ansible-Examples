@@ -88,7 +88,7 @@
       ansible_password: "{{ a10_password }}"
       ansible_port: "{{ a10_port }}"
       ip_dest_addr: "0.0.0.0"
-      ip_mask: "/0"
+      ip_mask: "0.0.0.0"
       ip_nexthop_ipv4:
         - ip_next_hop: "{{a10_gateway}}"
   - name: Send License Key to vThunder

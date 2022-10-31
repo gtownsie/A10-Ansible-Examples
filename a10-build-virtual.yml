@@ -1,0 +1,55 @@
+---
+- name: Create servers, service group, and virtual server 
+  connection: local
+  hosts: vthunder  
+  tasks:
+  - name: Create SLB Server 1
+    a10.acos_axapi.a10_slb_server:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ ansible_username }}"
+      ansible_password: "{{ ansible_password }}"
+      ansible_port: "{{ ansible_port }}"
+      name: SERVER1
+      host: 192.168.40.11
+
+  - name: Create SLB Server 2
+    a10.acos_axapi.a10_slb_server:
+      state: present
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ ansible_username }}"
+      ansible_password: "{{ ansible_password }}"
+      ansible_port: "{{ ansible_port }}"
+      name: SERVER2
+      host: 192.168.40.12
+
+  - name: Create SLB Server 3
+    a10.acos_axapi.a10_slb_server:
+      state: present
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ ansible_username }}"
+      ansible_password: "{{ ansible_password }}"
+      ansible_port: "{{ ansible_port }}"
+      name: SERVER3
+      host: 192.168.40.13
+
+  - name: Create SLB service group
+    a10.acos_axapi.a10_slb_service_group:
+      state: present 
+      ansible_host: "{{ ansible_host }}"
+      ansible_username: "{{ ansible_username }}"
+      ansible_password: "{{ ansible_password }}"
+      ansible_port: "{{ ansible_port }}"
+      name: ansible_sG 
+      protocol: tcp
+      health_check: HTTP_GET
+      member_list:
+        - name: SERVER1
+          port: 80
+        - name: SERVER2
+          port: 80
+        - name: SERVER3
+          port: 80
+
+
+
