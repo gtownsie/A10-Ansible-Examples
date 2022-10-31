@@ -1,4 +1,5 @@
 # A10-Ansible-Examples
+
 Example yml files for ansible to make changes to A10 ADC devices
 
 The samply yml files are based on the A10 Ansible ACOS modules
@@ -8,9 +9,9 @@ This is a set of example Ansible yml files to install an A10 (v)Thunder instance
 the a10.inv files contain the Ansible inventory of the Thunder device for configuration 
 and all the parameters needed to deploy the yml files.  
 
-Sample ansible command: ansible-playbook -i a10.inv deploy-a10.yml -vvv
+Sample ansible command: `ansible-playbook -i a10.inv deploy-a10.yml -vvv`
 
-The files perform the following functions (all parameters red from the a10.inv file):
+**The files perform the following functions (all parameters red from the a10.inv file):**
 
 a10-set-hostname.yml
 a10-set-DNS.yml
