@@ -13,16 +13,16 @@ Sample ansible command: `ansible-playbook -i a10.inv deploy-a10.yml -vvv`
 
 **The files perform the following functions (all parameters red from the a10.inv file):**
 
-a10-set-hostname.yml
-a10-set-DNS.yml
-a10-set-timezone.yml
-a10-set-NTP.yml
-a10-set-vlan.yml
-a10-set-ip.yml
-a10-set-dfg.yml
-a10-set-license.yml
-a10-wr-mem.yml
+- a10-set-hostname.yml
+- a10-set-DNS.yml
+- a10-set-timezone.yml
+- a10-set-NTP.yml
+- a10-set-vlan.yml
+- a10-set-ip.yml
+- a10-set-dfg.yml
+- a10-set-license.yml
+- a10-wr-mem.yml
 
-deploy-a10.yml - aggrigated playbook, from the list above, to deploy a (v)Thunder device.
+- deploy-a10.yml - aggrigated playbook, from the list above, to deploy a (v)Thunder device.
 
 
