@@ -9,7 +9,7 @@ and all the parameters needed to deploy the yml files.
 
 Sample ansible command: `ansible-playbook -i a10.inv deploy-a10.yml -vvv`
 
-**The files perform the following functions (all parameters red from the a10.inv file):**
+**The files perform the following functions (all parameters read from the a10.inv file):**
 
 - a10-set-hostname.yml
 - a10-set-DNS.yml
